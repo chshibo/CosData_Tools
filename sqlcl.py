@@ -16,7 +16,7 @@ astro_url = 'http://skyserver.sdss3.org/public/en/tools/search/x_sql.aspx'
 public_url = 'http://skyserver.sdss3.org/public/en/tools/search/x_sql.aspx'
 
 default_url = public_url
-default_fmt = 'csv'
+default_fmt = 'xml'
 
 
 def usage(status, msg=''):
