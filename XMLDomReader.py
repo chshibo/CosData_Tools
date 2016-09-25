@@ -25,9 +25,11 @@ class XmlDomReader(object):
                 pass
 
         galaxies=tableWanted.getElementsByTagName('Row')
-        cluster=[Galaxy.Galaxy(0,0,0,0)]
+        cluster=[Galaxy.Galaxy(0,0,0,0,0)]
         count=0
+        hasGalaxy=False;
         for galaxy in galaxies:
+            hasGalaxy=True
             items=galaxy.getElementsByTagName('Item')
             objid=''
             ra=0.0
@@ -44,12 +46,15 @@ class XmlDomReader(object):
                 elif item.getAttribute('name')=='r':
                     r=float(item.childNodes[0].data)
                 elif item.getAttribute('name')=='redshift':
-                    redshift=item.childNodes[0].data
-            gala=Galaxy.Galaxy(objid,ra,dec,redshift)
+                    redshift=float(item.childNodes[0].data)
+            gala=Galaxy.Galaxy(objid,ra,dec,r,redshift)
             count+=1
             if count<=1:
                 cluster.pop(0)
                 cluster.append(gala)
             else:
                 cluster.append(gala)
+
+        if not hasGalaxy:
+            cluster.pop(0)
         return cluster

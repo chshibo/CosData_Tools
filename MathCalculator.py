@@ -21,3 +21,20 @@ class MathCalculator(object):
 
         return RMS
 
+    def rootMeanSquareV(self,set):
+        mean=0.0
+        total=0.0
+        count=len(set)
+        sumForCalculateRms = 0.0
+        RMS=0.0
+
+        for object in set:
+            total+=object.velocityOfObject()
+        mean=total/count
+        for object in set:
+            sumForCalculateRms+=math.pow((object.velocityOfObject()-mean),2)
+
+        RMS=math.sqrt(sumForCalculateRms/(count-1))
+
+        return RMS
+
