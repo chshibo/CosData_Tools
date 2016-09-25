@@ -1,6 +1,6 @@
 from xml.dom.minidom import parse
 import xml.dom.minidom
-
+import Galaxy
 class XmlDomReader(object):
 
     def __init__(self,filename):
@@ -10,7 +10,7 @@ class XmlDomReader(object):
         return xml.dom.minidom.parse(self.filename)
 
     def getClusterofGalaxies(self):
-        cluster=()
+
         tableWanted=None
         tables=self.getDomTree().getElementsByTagName('Table')
 
@@ -25,8 +25,8 @@ class XmlDomReader(object):
                 pass
 
         galaxies=tableWanted.getElementsByTagName('Row')
-
-
+        cluster=[Galaxy.Galaxy(0,0,0,0)]
+        count=0
         for galaxy in galaxies:
             items=galaxy.getElementsByTagName('Item')
             objid=''
@@ -45,7 +45,11 @@ class XmlDomReader(object):
                     r=float(item.childNodes[0].data)
                 elif item.getAttribute('name')=='redshift':
                     redshift=item.childNodes[0].data
-
-if __name__ == '__main__':
-    reader=XmlDomReader('data_requested.xml')
-    reader.getClusterofGalaxies()
+            gala=Galaxy.Galaxy(objid,ra,dec,redshift)
+            count+=1
+            if count<=1:
+                cluster.pop(0)
+                cluster.append(gala)
+            else:
+                cluster.append(gala)
+        return cluster
