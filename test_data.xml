@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE root [
+<!ELEMENT root (Table*)>
+<!ELEMENT Table (Row*)>
+<!ELEMENT Row (Item*)>
+<!ELEMENT Item (#PCDATA)>
+<!ATTLIST Table name CDATA #REQUIRED>
+<!ATTLIST Item name CDATA #REQUIRED>
+]>
+<root>
+<Table name="Table1">
+<Row>
+<Item name="objid">1237667444048331345</Item>
+<Item name="ra">194.158235099484</Item>
+<Item name="dec">28.0210819716682</Item>
+<Item name="r">22.11486</Item>
+<Item name="z">21.47337</Item>
+</Row>
+<Row>
+<Item name="objid">1237667443511526264</Item>
+<Item name="ra">194.158261218858</Item>
+<Item name="dec">27.4810742426185</Item>
+<Item name="r">22.56898</Item>
+<Item name="z">23.40672</Item>
+</Row>
+<Row>
+<Item name="objid">1237667444048331924</Item>
+<Item name="ra">194.158280289914</Item>
+<Item name="dec">27.9251425597352</Item>
+<Item name="r">22.08692</Item>
+<Item name="z">22.09446</Item>
+</Row>
+</Table>
+    <Table name="SqlQuery">
+<Row>
+<Item name="query">SELECT objid,ra,dec,r,z FROM galaxy WHERE ra BETWEEN 194.138787 AND 195.548787 AND dec BETWEEN 27.259389 AND 28.709389
+</Item>
+</Row>
+</Table>
+</root>

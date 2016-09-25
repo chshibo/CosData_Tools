@@ -15,3 +15,5 @@ class SpaceObject(object):
     def velocityOfObject(self):
         return ((math.pow(self.redshift,2)+2*self.redshift)/\
                 (math.pow(self.redshift,2)+2*self.redshift+2))*CONST_SPEED_OF_LIGHT
+
+

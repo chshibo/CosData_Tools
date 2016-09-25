@@ -12,10 +12,10 @@ class MathCalculator(object):
         RMS=0.0
 
         for object in set:
-            total+=object[datatype]
+            total+=object.__getattribute__(datatype)
         mean=total/count
         for object in set:
-            sumForCalculateRms+=math.pow((object[datatype]-mean),2)
+            sumForCalculateRms+=math.pow((object.__getattribute__(datatype)-mean),2)
 
         RMS=math.sqrt(sumForCalculateRms/(count-1))
 
