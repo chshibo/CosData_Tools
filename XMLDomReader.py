@@ -1,1 +1,2 @@
 class XmlDomReader(object):
+ pass;
