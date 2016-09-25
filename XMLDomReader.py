@@ -1,7 +1,6 @@
 from xml.dom.minidom import parse
 import xml.dom.minidom
-import SpaceObejct
-import Galaxy
+
 class XmlDomReader(object):
 
     def __init__(self,filename):
@@ -11,5 +10,42 @@ class XmlDomReader(object):
         return xml.dom.minidom.parse(self.filename)
 
     def getClusterofGalaxies(self):
+        cluster=()
         tableWanted=None
-        C
+        tables=self.getDomTree().getElementsByTagName('Table')
+
+        for table in tables:
+            if(table.hasAttribute('name')):
+                if(table.getAttribute('name')=="Table1"):
+                    tableWanted=table
+                    break
+                else:
+                    pass
+            else:
+                pass
+
+        galaxies=tableWanted.getElementsByTagName('Row')
+
+
+        for galaxy in galaxies:
+            items=galaxy.getElementsByTagName('Item')
+            objid=''
+            ra=0.0
+            dec=0.0
+            r=0.0
+            redshift=0.0
+            for item in items:
+                if item.getAttribute('name')=='objid':
+                    objid=item.childNodes[0].data
+                elif item.getAttribute('name')=='ra':
+                    ra=float(item.childNodes[0].data)
+                elif item.getAttribute('name')=='dec':
+                    dec=float(item.childNodes[0].data)
+                elif item.getAttribute('name')=='r':
+                    r=float(item.childNodes[0].data)
+                elif item.getAttribute('name')=='redshift':
+                    redshift=item.childNodes[0].data
+
+if __name__ == '__main__':
+    reader=XmlDomReader('data_requested.xml')
+    reader.getClusterofGalaxies()
