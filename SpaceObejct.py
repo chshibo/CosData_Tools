@@ -14,7 +14,7 @@ class SpaceObject(object):
     #+going away ,-for moving closer
    #unit:m/s
     def velocityOfObject(self):
-        return self.redshift*CONST_SPEED_OF_LIGHT
+        return self.redshift*CONST_SPEED_OF_LIGHT/1000
     #unit:Mpc
     def distance(self):
-        return self.velocityOfObject()/(1000*HUBBLE_CONSTANT)
+        return self.velocityOfObject()/HUBBLE_CONSTANT
