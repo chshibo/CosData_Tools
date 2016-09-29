@@ -20,36 +20,22 @@ if __name__ == '__main__':
 
     mathCalculator=MathCalculator.MathCalculator()
     Redshift=mathCalculator.MeanRedshift(galaxies)
-    angles=[0]
-    angles.pop(0)
-    rband=[0]
-    rband.pop(0)
-    velocity=[0]
-    velocity.pop(0)
-    for galaxy in galaxies:
-        theta=math.sqrt(math.pow(galaxy.__getattribute__('ra')-NGC_4874_RA,2)+math.pow(galaxy.__getattribute__('dec')-NGC_4874_DEC,2))
-        angles.append(theta)
-        rband.append(galaxy.__getattribute__('r'))
-        velocity.append(galaxy.velocityOfObject())
-    Meantheta=mathCalculator.Meancalculate(angles)
-    MeanVelocity=mathCalculator.Meancalculate(velocity)
-    RMSDispersion=mathCalculator.rootMeanSquareV(velocity)
+
+    MeanVelocity=mathCalculator.Meancalculate(galaxies,'velocity')
+    RMSDispersion=mathCalculator.rootMeanSquareV(galaxies,'velocity')
     Distance=MeanVelocity/HUBBLE_CONSTANT
-    Radius=Distance*0.75/180*math.pi  #TODO
+    Radius=Distance*(0.75/180)*math.pi
     MasstoSun=2*RMSDispersion*RMSDispersion*Radius*232*1e6
     LumitoSun=0.0
 
-    for object in rband:
-        Mr = object-5*math.log10(Distance*1e6/10)
-        LumitoSun+=math.pow(10,(-0.4)*(Mr-4.68))
     for object in galaxies:
-        print 'redshift ',object.__getattribute__('redshift'),'  r: ',object.__getattribute__('r')
+        Mr = object.__getattribute__('r')-5*math.log10(object.__getattribute__('distance')*1e6/10)
+        LumitoSun+=math.pow(10,(-0.4)*(Mr-4.68))
 
     print 'total galaxies data used: ',len(galaxies)
     print 'redshift: ',Redshift
     print 'meanVelocity',MeanVelocity
     print 'RMSDispersion: ',RMSDispersion
-    print 'Meantheta: ',Meantheta
     print 'Distance: ',Distance
     print 'Radius: ',Radius
     print 'MasstoSun: ',MasstoSun
