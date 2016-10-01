@@ -22,7 +22,7 @@ class MathCalculator(object):
             mean = total / count
             for object in set:
                 differenceRate = math.fabs(object.__getattribute__('redshift') - mean) / mean
-                if differenceRate > 3:
+                if differenceRate > 1:
                     set.remove(object)
             total = 0.0
             num -= 1
@@ -34,10 +34,11 @@ class MathCalculator(object):
             mean = total / count
             for object in set:
                 differenceRate = math.fabs(object.__getattribute__('redshift') - mean) / mean
-                if differenceRate > 0.8:
+                if differenceRate > 0.5:
                     set.remove(object)
             total = 0.0
             num -= 1
+        total=0.0
         for object in set:
             total+=object.__getattribute__('redshift')
         count=len(set)

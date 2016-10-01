@@ -3,14 +3,31 @@ import MathCalculator
 import SqlReader
 import XMLDomReader
 import math
+import os
+import string
+
 VEGA_LUMINOSITY=74.4731973982
 NGC_4874_RA=194.898787
 NGC_4874_DEC=27.959389
 HUBBLE_CONSTANT=67.6
 
+def galaxies_print(galaxies):
+    file=open("data_used.csv","w+")
+    title="objid,ra,dec,r-band,redshift"
+    file.write(title+"\n")
+    for object in galaxies:
+        coma=","
+        galaxy_data=str(object.__getattribute__("objid"))+coma\
+                    +str(object.__getattribute__("ra"))+coma+ \
+                    str(object.__getattribute__("dec"))+coma+ \
+                    str(object.__getattribute__("r"))+coma+ \
+                    str(object.__getattribute__("redshift"))+"\n"
+        file.write(galaxy_data)
+    file.close()
+
 if __name__ == '__main__':
     #update information and write to the file
-    sqlReader=SqlReader.SqlReader("SELECT p.objid,p.ra,p.dec,p.r,s.z as redshift FROM galaxy as p join specobj as s on s.bestobjid=p.objid WHERE p.ra BETWEEN 194.148787 AND 195.648787 AND p.dec BETWEEN 27.209389 AND 28.709389")
+    sqlReader=SqlReader.SqlReader("SELECT p.objid,p.ra,p.dec,p.r,s.z as redshift FROM galaxy as p join specobj as s on s.bestobjid=p.objid WHERE p.ra BETWEEN 194.39877127332 AND 195.39877127332 AND p.dec BETWEEN 27.4592632735057 AND 28.4592632735057")
     sqlReader.dataCollect()
 
     #parse and get data
@@ -21,10 +38,12 @@ if __name__ == '__main__':
     mathCalculator=MathCalculator.MathCalculator()
     Redshift=mathCalculator.MeanRedshift(galaxies)
 
+    galaxies_print(galaxies)
+
     MeanVelocity=mathCalculator.Meancalculate(galaxies,'velocity')
     RMSDispersion=mathCalculator.rootMeanSquareV(galaxies,'velocity')
     Distance=MeanVelocity/HUBBLE_CONSTANT
-    Radius=Distance*(0.75/180)*math.pi
+    Radius=Distance*(0.5/180)*math.pi
     MasstoSun=2*RMSDispersion*RMSDispersion*Radius*232*1e6
     LumitoSun=0.0
 
@@ -41,3 +60,4 @@ if __name__ == '__main__':
     print 'MasstoSun: ',MasstoSun
     print 'LumitoSun: ',LumitoSun
     print 'MasstoLumino: ',MasstoSun/LumitoSun
+
